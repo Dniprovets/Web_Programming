@@ -19,16 +19,18 @@
   <meta name="keywords" content="java_script,тестовий приклад,основи java_script">
   <!-- Підключаємо css стилі -->
   <link rel="stylesheet" href="../css/task_3_js.css">
+  <!-- Підключаємо необхідні шрифти -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Playfair+Display&family=Train+One&display=swap"
+    rel="stylesheet">
   <!-- 1 варіант підключення JS - локально, у тезі <head> -->
   <script type="text/javascript">
     // Вивід тексту в консоль розробника
     console.log("Інформаційне повідомлення");
     console.warn("Попереджувальне повідомлення");
     console.error("Повідомлення про помилку");
-
   </script>
-
-  <!--  <script type="text/javascript" src="../js/snow.js"></script>-->
 
 </head>
 
@@ -37,14 +39,16 @@
 <body>
 
   <!-- Відображаємо даний блок, якщо JavaScript вимкнено -->
-  <noscript class="block block_end">Для правильного відображення даної сторінки <a href="https://www.google.com/url?q=https://help.ria.com/index.php%3F/Knowledgebase/Article/View/647/144&sa=U&ved=2ahUKEwiu-vqCusnvAhUpCRAIHdJdBvgQFjACegQIARAB&usg=AOvVaw3GfONVRPxnNd88PzkpRRph">увімкніть JavaScript</a> у вашому браузері</noscript>
+  <noscript class="block block_end">Для правильного відображення даної сторінки <a
+      href="https://www.google.com/url?q=https://help.ria.com/index.php%3F/Knowledgebase/Article/View/647/144&sa=U&ved=2ahUKEwiu-vqCusnvAhUpCRAIHdJdBvgQFjACegQIARAB&usg=AOvVaw3GfONVRPxnNd88PzkpRRph">увімкніть
+      JavaScript</a> у вашому браузері</noscript>
 
   <div class="block_e" id="title">
     <h1 id="title_text">Основи JavaScript</h1>
   </div>
 
   <!-- Сітка з трьох елементів -->
-  <div class="grid3" id="grid_1">
+  <div class="grid_3_column" id="grid_1">
 
     <!-- Блок <div_1> -->
     <div class="block_n" id="div_1">
@@ -57,12 +61,14 @@
       <hr>
 
       <form>
-        <input type="text" id="spec_field_1" oninput="only_big_letter(this)" placeholder="Спеціалізоване поле №1" title="Це поле може містити лише великі літери">
+        <input type="text" id="spec_field_1" oninput="only_big_letter(this)" placeholder="Спеціалізоване поле №1"
+          title="Це поле може містити лише великі літери">
         <input type="button" onclick="clear_spec_field_1()" value="Очистити поле">
       </form>
 
       <form>
-        <input type="text" id="spec_field_2" oninput="only_small_letter(this)" placeholder="Спеціалізоване поле №2" title="Це поле може містити лише малі літери">
+        <input type="text" id="spec_field_2" oninput="only_small_letter(this)" placeholder="Спеціалізоване поле №2"
+          title="Це поле може містити лише малі літери">
         <input type="button" onclick="clear_spec_field_2()" value="Очистити поле">
       </form>
 
@@ -125,7 +131,7 @@
   </div>
 
   <!-- Сітка з двох елементів -->
-  <div class="grid2" id="grid_2">
+  <div class="grid_2_column" id="grid_2">
 
     <!-- Блок <div_4> -->
     <div class="block_n" id="div_4">
@@ -165,7 +171,8 @@
         <br>
         <input type="button" onclick="check_condition_3()" value="Вибрати елементи, які не мають класу <test_z>">
         <br>
-        <input type="button" onclick="check_condition_4()" value="Вибрати елементи, які мають атрибут [custom_atr], значення якого є >= 25">
+        <input type="button" onclick="check_condition_4()"
+          value="Вибрати елементи, які мають атрибут [custom_atr], значення якого є >= 25">
         <br>
         <input type="button" onclick="unselect_all_elements()" value="Скасувати вибір елементів">
       </form>
@@ -175,10 +182,21 @@
     <!-- Блок <div_5> -->
     <div class="block_e" id="div_5">
 
-      <form>
+      <div id="animation_block">
 
-        <input type="button" value="Приклад таймеру">
-        <input type="button" value="Приклад інтервалу">
+        <form id="animation_buttons">
+
+          <input id="btn_timer" type="button" value="Запустити таймер">
+          <input id="btn_interval" type="button" value="Запустити інтервал">
+
+        </form>
+
+        <div id="animation_context" class="block_e">
+
+          <img id="img" src="../img/icons/chart.png" alt="image">
+
+        </div>
+      </div>
 
       </form>
 
@@ -191,15 +209,17 @@
     <a href="../index.html">Перейти на головну сторінку</a>
   </div>
 
-
   <!-- ........................................................... -->
 
   <!-- Підключення бібліотеки jQuery -->
   <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
   <!-- Підключення файлу task_3_js.js -->
   <script type="text/javascript" src="../js/task_3_js.js"></script>
+  <!-- Підключаємо файлу snow.js для ефекту падіння сніжинок -->
+  <script src="../js/snow.js"></script>
 </body>
 
 <!-- Корисні посилання: -->
+<!-- https://jquery.com/ - бібліотека jQuery -->
 
 </html>

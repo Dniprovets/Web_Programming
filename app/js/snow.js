@@ -1,77 +1,136 @@
-let snowmax=35;
-let snowcolor= [ "red", "green", "blue" ];
-let snowtype=new Array("Arial Black","Arial Narrow","Times","Comic Sans MS");
-let snowletter="*";
-let sinkspeed=0.4; 
-let snowmaxsize=40;
-let snowminsize=8;
-let snowingzone=1;
+// Символ сніжинки
+let snow_letter = "*";
+// Манімальний розмір сніжинки
+let snow_min_size = 8;
+// Максимальний розмір сніжинки
+let snow_max_size = 50;
+// Максимальна кількість сніжинок
+let snow_max_count = 35;
+// Швидкість падіння сніжинок
+let snow_speed = 0.5;
+// Кольори сніжинок
+let snow_color = [ "#33F", "#55F", "#77F", "#99F", "#BBF", "#DDF" ];
+// Шрифти сніжинок
+let snow_font = [ "Dela Gothic One", "Playfair Display", "Train One" ];
 
-let snow=new Array();
-let marginbottom;
-let marginright;
-let timer;
-let i_snow=0;
-let x_mv=new Array();
-let crds=new Array();
-let lftrght=new Array();
-let browserinfos=navigator.userAgent;
-let ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/);
-let ns6=document.getElementById&&!document.all;
-let opera=browserinfos.match(/Opera/);
-function randommaker(range) {
-    rand=Math.floor(range*Math.random());
-    return rand;
-}
-function initsnow() {
-    if (ie5 || opera) {
-        marginbottom=document.body.clientHeight;
-        marginright=document.body.clientWidth;
-    }
-    else if (ns6) {
-        marginbottom=window.innerHeight;
-        marginright=window.innerWidth;
-    }
-    let snowsizerange=snowmaxsize-snowminsize;
-    for (i=0;i<=snowmax;i++) {
-        crds[i]=0;
-        lftrght[i]=Math.random()*15;
-        x_mv[i]=0.03+Math.random()/10;
-        snow[i]=document.getElementById("s"+i);
-        snow[i].style.fontFamily=snowtype[randommaker(snowtype/length)];
-        snow[i].size=randommaker(snowsizerange)+snowminsize;
-        snow[i].style.fontSize=snow[i].size+"px";
-        snow[i].style.color=snowcolor[randommaker(snowcolor.length)];
-        snow[i].sink=sinkspeed*snow[i].size/5;
-        if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
-        if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
-        if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
-        if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
-        snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size);
-        snow[i].style.left=snow[i].posx+"px";
-        snow[i].style.top=snow[i].posy+"px";
-    }
+// Висота сторінки
+let dH;
+// Ширина сторінки
+let dW;
+// Кількість кадрів за секунду
+let FPS = 60;
+// Масив сніжинок
+let snow = [];
+
+// Допоміжні перемінні
+let wiggle_speed = [];
+let wiggle_value = [];
+let wiggle = [];
+
+// .......................................................................
+
+// Отримуємо випадкове число
+function random_value (range) {
     
-    movesnow();
-}
-function movesnow() {
-    for(i=0;i<=snowmax;i++) {
-        crds[i]+=x_mv[i];
-        snow[i].posy+=snow[i].sink;
-        snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i])+"px";
-        snow[i].style.top=snow[i].posy+"px";
-        if (snow[i].posy>=marginbottom-2*snow[i].size || parseInt(snow[i].style.left)>(marginright-3*lftrght[i])) {
-            if (snowingzone==1) {snow[i].posx=randommaker(marginright-snow[i].size)}
-            if (snowingzone==2) {snow[i].posx=randommaker(marginright/2-snow[i].size)}
-            if (snowingzone==3) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}
-            if (snowingzone==4) {snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}
-            snow[i].posy=0;
-        }
-    }
-    let timer=setTimeout("movesnow()",1000/60);
-}
-for (i=0;i<=snowmax;i++) {
-    document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"px;'>"+snowletter+"</span>");
+return Math.floor(range * Math.random());
+
 }
 
-window.onload=initsnow;
+// .......................................................................
+
+// Ініціалізуємо сніжинки
+function init_snow() {
+
+dW = document.body.clientWidth;
+dH = document.body.clientHeight;
+
+let snow_size_range = snow_max_size - snow_min_size;
+
+for (i = 0; i < snow_max_count; i++) {
+
+    // Задаємо "гойдання" сніжинок
+    wiggle[i] = 15 + Math.random() * 15;
+    // Задаємо швидкість "гойдання" сніжинок
+    wiggle_speed[i] = 0.03 + Math.random() / 10;
+    // Перемінна зберігає наростаюче "гойдання" сніжинок
+    wiggle_value[i] = 0;
+
+    // Отримуємо елемент
+    snow[i] = document.getElementById("snowflake_" + i);
+    // Задаємо шрифт
+    snow[i].style.fontFamily = snow_font[random_value(snow_font.length)];
+    // Задаємо розмір
+    snow[i].size = random_value(snow_size_range) + snow_min_size;
+    // Задаємо розмір у пікселях
+    snow[i].style.fontSize = snow[i].size + "px";
+    // Задаємо колір
+    snow[i].style.color = snow_color[random_value(snow_color.length)];
+    // Задаємо швидкість
+    snow[i].speed = snow_speed * snow[i].size / 5;
+    // Задаємо позицію по горизонталі
+    snow[i].pos_x = random_value(dW - snow[i].size)
+    // Задаємо позицію по вертикалі
+    snow[i].pos_y = random_value(2 * dH - dH - 2 * snow[i].size);
+    // Задаємо позицію по горизонталі в пікселях
+    snow[i].style.left = snow[i].pos_x + "px";
+    // Задаємо позицію по вертикалі в пікселях
+    snow[i].style.top = snow[i].pos_y + "px";
+
+}
+
+move_snow();
+
+}
+
+// .......................................................................
+
+// Рухаємо сніжинки
+function move_snow() {
+
+dW = document.body.clientWidth;
+dH = document.body.clientHeight;
+
+for (i = 0; i < snow_max_count; i++) {
+    
+    snow[i].pos_y += snow[i].speed;
+    wiggle_value[i] += wiggle_speed[i];
+    
+    snow[i].style.top = snow[i].pos_y + "px";
+    snow[i].style.left = snow[i].pos_x + wiggle[i] * Math.sin(wiggle_value[i]) + "px";
+
+    if (snow[i].pos_y >= dH - 1.3 * snow[i].size ||
+        parseInt(snow[i].style.left) > (dW - 3 * wiggle[i])) {
+
+            snow[i].pos_x = random_value(dW - snow[i].size)
+            snow[i].pos_y = 0;
+            snow[i].hidden = !snow_is_running;
+    }
+}
+
+setTimeout(move_snow, 1000 / FPS);
+
+}
+
+// .......................................................................
+
+// Додаємо сніжинки до сторінки
+for (z = 0; z < snow_max_count; z++) {
+    
+document.write(`<span id="snowflake_${z}"
+                      style="position:absolute;
+                             top:-${snow_max_size}px;">${snow_letter}</span>`);
+}
+
+// Допоміжні перемінна
+let snow_is_started = false;
+let snow_is_running = false;
+
+// Починаємо ініціалізацію сніжинок, коли сторінка буде повністю завантажена
+$("#title").bind("click", () => {
+    
+    if (!snow_is_started) { init_snow();
+                            snow_is_started = true; }
+
+    snow_is_running = !snow_is_running;
+    
+});

@@ -38,7 +38,8 @@ input {
   margin: 5px 0 0 5px;
 }
 
-button, input[type="button"] {
+button,
+input[type="button"] {
   margin: 5px 2px;
   padding: 2px 5px;
 }
@@ -48,17 +49,18 @@ hr {
   padding: 0;
 }
 
-.grid2 {
+.grid_2_column {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-.grid3 {
+.grid_3_column {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-ul, ol {
+ul,
+ol {
   text-align: left;
 }
 
@@ -71,7 +73,8 @@ ul, ol {
   background-color: #0F05;
 }
 
-#div_2, #div_6 {
+#div_2,
+#div_6 {
   color: white;
   border-color: #333;
   background-color: #3338;
@@ -96,6 +99,50 @@ ul, ol {
   background-color: #FF05;
 }
 
+#div_6 {
+  margin-bottom: 2px;
+}
+
+#div_6 a,
+#div_6 a:visited {
+  color: white;
+  font-size: 1.3em;
+  text-decoration: none;
+}
+
+#animation_block {
+  /* Тип відображення: flex */
+  display: flex;
+  /* Напрямок відображення: стовбець */
+  flex-flow: column;
+  /* Висота блоку: 100% висоти батьківського елемента */
+  height: 100%;
+}
+
+#animation_buttons {
+  /* Розмір елемента вираховується із його вмісту */
+  flex-grow: 0;
+}
+
+#animation_context {
+  /* Елемент заповнює весь доступний простір */
+  flex-grow: 1;
+  /* Тип відображення: flex */
+  display: flex;
+  /* Вертикальне вирівнювання: по центру */
+  align-items: center;
+  /* Горизонтальне вирівнювання: по центру */
+  justify-content: center;
+  /* Колір фону */
+  background-color: #00F5;
+  /* Колір рамки */
+  border-color: #00F;
+}
+
+#img {
+  position: relative;
+}
+
 #flex_block {
   /* Тип відображення: flex */
   display: flex;
@@ -117,7 +164,7 @@ ul, ol {
 #flex_block img[alt="im_2"],
 #flex_block img[alt="im_4"],
 #flex_block img[alt="im_6"],
-#flex_block img[alt="im_8"]{
+#flex_block img[alt="im_8"] {
   display: block;
   width: 72px;
 }
@@ -125,20 +172,10 @@ ul, ol {
 #title {
   color: black;
   transition: border-color 2s,
-              background-color 2s;
+    background-color 2s;
 }
 
 #title_text {
   display: inline;
   cursor: pointer;
-}
-
-#div_6 {
-  margin-bottom: 2px;
-}
-
-#div_6 a, #div_6 a:visited {
-  color: white;
-  font-size: 1.3em;
-  text-decoration: none;
 }

@@ -280,7 +280,105 @@ function unselect_all_elements() {
 // .......................................................................
 
 // Додаємо прослуховувачі подій до кнопок
+function add_animation_button_listener() {
+  // Кнопка "Запустити таймер"
+  $("#btn_timer").bind("click", start_timer);
+  // Кнопка "Запустити інтервал"
+  $("#btn_interval").bind("click", start_interval);
+}
+
+// .......................................................................
+
+// Запускаємо таймер
+function start_timer() {
+  // Змінюємо текст кнопки
+  $("#btn_timer").attr("value", "Анімація запуститься через 3 сек.");
+  // Запускаємо таймер
+  setTimeout(() => {
+    // Змінюємо текст кнопки
+    $("#btn_timer").attr("value", "Запустити таймер");
+    // Запускаємо анімацію
+    start_animation();
+  }, 3000);
+}
+
+// .......................................................................
+
+let intervar_run = false;
+
+// Запускаємо або зупиняємо інтервал
+function start_interval() {
+  // Зупиняємо інтервал
+  if (intervar_run) {
+    intervar_run = false;
+    $("#btn_interval").attr("value", "Запустити інтервал");
+    return;
+  }
+  // Запускаємо інтервал
+  else {
+    intervar_run = true;
+    $("#btn_interval").attr("value", "Зупинити інтервал");
+  }
+  // Задаємо інтервал
+  let interval = setInterval(() => {
+    // Запускаємо анімацію
+    start_animation();
+    // Якщо інтервал зупинено - очищуємо його
+    if (!intervar_run) { clearInterval(interval); }
+  }, 3000);
+}
+
+// .......................................................................
+
+// Необхідні змінні
+let animation_id = 0;
+
+// Запускаємо анімацію
+function start_animation() {
+  // Виводимо інформаційне повідомлення
+  console.log(`Start animation №${animation_id}`);
+  // Анімуємо об'єкт
+  switch (animation_id) {
+    // Анімація №1
+    case 0: $("#img").animate({ opacity: 0.0,
+                                left:    '-39%',
+                                top:     '25%' }, 500)
+                     .animate({ opacity: 1.0,
+                                top:     '-25%' }, 500);
+            break;
+    // Анімація №2
+    case 1: $("#img").animate({ opacity: 0.0,
+                                left:    '0%',
+                                top:     '0%',
+                                width:   '40%' }, 500);
+            break;
+    // Анімація №3
+    case 2: $("#img").animate({ opacity: 1.0,
+                                width:   '128px' }, 500);
+            break;
+    // Анімація №4
+    case 3: $("#img").animate({ opacity: 0.0,
+                                left:    '40%',
+                                width:   '16px' }, 500);
+            break;
+    // Анімація №5
+    case 4: $("#img").animate({ opacity: 0.5,
+                                left:    '-35%',
+                                width:   '128px' }, 500)
+                     .animate({ opacity: 1.0,
+                                left:    '0%',
+                                width:   '128px' }, 500);
+    break;
+  }
+  // Збільшуємо індекс анімації
+  animation_id += animation_id < 4 ? 1 : -4;
+}
+
+// .......................................................................
+
+// Додаємо прослуховувачі подій до кнопок
 add_flex_button_listener();
+add_animation_button_listener();
 
 // Змінюємо колір фону заголовку кожні 2 сек.
 setInterval(change_title_background, 3000);
